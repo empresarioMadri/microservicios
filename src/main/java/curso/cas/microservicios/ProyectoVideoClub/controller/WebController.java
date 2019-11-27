@@ -27,7 +27,7 @@ public class WebController {
 	private static final Logger log = LoggerFactory.getLogger(WebController.class);
 
 	@Autowired
-	public WebController(ApplicationArguments args) {
+	public WebController(ApplicationArguments args){
 		boolean disponible = args.containsOption("disponible");
 		if(disponible)
 			log.info("Esta habilitado");
