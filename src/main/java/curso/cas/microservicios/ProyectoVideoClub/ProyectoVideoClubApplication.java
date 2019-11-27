@@ -5,6 +5,9 @@ import java.io.PrintStream;
 
 import javax.servlet.http.HttpServlet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import curso.cas.microservicios.ProyectoVideoClub.controller.WebController;
 import curso.cas.microservicios.ProyectoVideoClub.servlet.HolaServlet;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -27,7 +31,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class ProyectoVideoClubApplication {
-
+	
+	private static final Logger log = LoggerFactory.getLogger(ProyectoVideoClubApplication.class);
+	
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(ProyectoVideoClubApplication.class);
 		app.setBannerMode(Banner.Mode.OFF);
