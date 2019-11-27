@@ -43,7 +43,18 @@ public class WebController {
 	@GetMapping
 	@ResponseBody
 	public String index(@RequestParam String nombre) {
+
 		return "<h3>Hola mundo " + nombre + "</h3>";
 	}
+
+	@GetMapping("/multiplicar")
+	@ResponseBody
+	public String multiplicar(@RequestParam double num1, @RequestParam double num2) {
+
+		double resultado = num1 * num2;
+
+		return "El resultado de multiplicar " + num1 + " * " + num2 + " es: " + resultado;
+	}
+
 
 }
