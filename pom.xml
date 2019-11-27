@@ -11,9 +11,9 @@
 	</parent>
 	<packaging>war</packaging>
 	<groupId>curso.cas.microservicios</groupId>
-	<artifactId>ProyectoVideoClub</artifactId>
+	<artifactId>microservicios</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ProyectoVideoClub</name>
+	<name>Microservicios</name>
 	<description>Proyecto para curso Cas Training</description>
 
 	<properties>
