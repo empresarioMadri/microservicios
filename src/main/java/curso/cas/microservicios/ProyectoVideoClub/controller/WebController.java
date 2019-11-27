@@ -1,5 +1,7 @@
 package curso.cas.microservicios.ProyectoVideoClub.controller;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebController {
 	
 	
-	@Value("${app.version}")
+	@Value("${version}")
 	private String appVersion;
+	
+	@Value("${app.version}")
+	private String appVersion2;
 
 	private static final Logger log = LoggerFactory.getLogger(WebController.class);
 
@@ -26,8 +31,13 @@ public class WebController {
 		boolean disponible = args.containsOption("disponible");
 		if(disponible)
 			log.info("Esta habilitado");
-		log.info("Versión del programa " + appVersion);
 		args.getNonOptionArgs().forEach(argumento -> log.info(argumento));
+	}
+	
+	@PostConstruct
+	public void init() {
+		log.info("Versión del programa " + appVersion);
+		log.info("Versión del programa2 " + appVersion2);
 	}
 
 	@GetMapping
