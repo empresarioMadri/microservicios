@@ -73,7 +73,7 @@ public class ProyectoVideoClubApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		log.info("Version aplicacion " + props.getVersion());
+		log.info("Descripcion aplicacion " + props.getDescripcion());
 		log.info("Nombre aplicacion " + props.getNombre());
 		log.info("Servidor aplicacion " + props.getServidor());
 		
@@ -84,7 +84,7 @@ public class ProyectoVideoClubApplication implements CommandLineRunner {
 	public static class MiAppProperties {
 		private String servidor;
 		private String nombre;
-		private String version;
+		private String descripcion;
 
 		public String getServidor() {
 			return servidor;
@@ -102,12 +102,12 @@ public class ProyectoVideoClubApplication implements CommandLineRunner {
 			this.nombre = nombre;
 		}
 
-		public String getVersion() {
-			return version;
+		public String getDescripcion() {
+			return descripcion;
 		}
 
-		public void setVersion(String version) {
-			this.version = version;
+		public void setDescripcion(String descripcion) {
+			this.descripcion = descripcion;
 		}
 
 	}
