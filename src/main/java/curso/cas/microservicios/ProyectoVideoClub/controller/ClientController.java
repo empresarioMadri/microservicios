@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,17 +22,18 @@ public class ClientController {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	@PostMapping(path = "/insertar")
-	public @ResponseBody String insertarCliente(@RequestParam List<String> parametros) {
+	@PostMapping(path = "/insertar/{nombre}/{email}/{telefono}")
+	public @ResponseBody String insertarCliente(@PathVariable String nombre, @PathVariable String email,
+			@PathVariable String telefono) {
 
-		/*Cliente cliente = new Cliente();
-		cliente.setName(parametros.get("nombre"));
-		cliente.setEmail(parametros.get("email"));
-		cliente.setTelephone(parametros.get("telephone"));
+		Cliente cliente = new Cliente();
+		cliente.setName(nombre);
+		cliente.setEmail(email);
+		cliente.setTelephone(telefono);
 
-		clientRepository.save(cliente);*/
+		clientRepository.save(cliente);
 
-		return "Todo perfecto " + parametros;
+		return "Todo perfecto";
 
 	}
 
