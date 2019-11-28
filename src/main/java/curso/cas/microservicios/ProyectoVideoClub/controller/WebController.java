@@ -16,24 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/videoClub")
 public class WebController {
-	
-	
+
 	@Value("${version}")
 	private String appVersion;
-	
+
 	@Value("${app.version}")
 	private String appVersion2;
 
 	private static final Logger log = LoggerFactory.getLogger(WebController.class);
 
 	@Autowired
-	public WebController(ApplicationArguments args){
+	public WebController(ApplicationArguments args) {
 		boolean disponible = args.containsOption("disponible");
-		if(disponible)
+		if (disponible)
 			log.info("Esta habilitado");
 		args.getNonOptionArgs().forEach(argumento -> log.info(argumento));
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		log.info("Versión del programa " + appVersion);
@@ -49,6 +48,7 @@ public class WebController {
 
 	@GetMapping("/multiplicar")
 	@ResponseBody
+<<<<<<< HEAD
 	public String multiplicar(@RequestParam double num1, @RequestParam double num2) {
 
 		double resultado = num1 * num2;
