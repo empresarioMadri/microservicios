@@ -1,5 +1,7 @@
 package curso.cas.microservicios.ProyectoVideoClub.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +21,12 @@ public class ClientController {
 	private ClientRepository clientRepository;
 
 	@PostMapping(path = "/insertar")
-	public @ResponseBody String insertarCliente(@RequestParam(defaultValue = "David") String nombre, @RequestParam String email,
-			@RequestParam(required = false) String telephone) {
+	public @ResponseBody String insertarCliente(@RequestParam Map<String,String> parametros) {
 
 		Cliente cliente = new Cliente();
-		cliente.setName(nombre);
-		cliente.setEmail(email);
-		cliente.setTelephone(telephone);
+		cliente.setName(parametros.get("nombre"));
+		cliente.setEmail(parametros.get("email"));
+		cliente.setTelephone(parametros.get("telephone"));
 
 		clientRepository.save(cliente);
 
