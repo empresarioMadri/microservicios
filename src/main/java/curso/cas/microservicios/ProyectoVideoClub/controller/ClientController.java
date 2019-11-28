@@ -22,8 +22,8 @@ public class ClientController {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	@PostMapping(path = "/insertar/{nombre}/{email}/{telefono}")
-	public @ResponseBody String insertarCliente(@PathVariable String nombre, @PathVariable String email,
+	@PostMapping(path = "/insertar/{nombre}/{telefono}")
+	public @ResponseBody String insertarCliente(@PathVariable String nombre, @RequestParam String email,
 			@PathVariable String telefono) {
 
 		Cliente cliente = new Cliente();
