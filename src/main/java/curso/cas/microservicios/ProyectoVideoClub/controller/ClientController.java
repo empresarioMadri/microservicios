@@ -1,7 +1,11 @@
 package curso.cas.microservicios.ProyectoVideoClub.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,14 +22,14 @@ public class ClientController {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	@PostMapping(path = "/insertar")
-	public @ResponseBody String insertarCliente(@RequestParam(defaultValue = "David") String nombre, @RequestParam String email,
-			@RequestParam(required = false) String telephone) {
+	@PostMapping(path = "/insertar/{nombre}/{email}/{telefono}")
+	public @ResponseBody String insertarCliente(@PathVariable String nombre, @PathVariable String email,
+			@PathVariable String telefono) {
 
 		Cliente cliente = new Cliente();
 		cliente.setName(nombre);
 		cliente.setEmail(email);
-		cliente.setTelephone(telephone);
+		cliente.setTelephone(telefono);
 
 		clientRepository.save(cliente);
 
