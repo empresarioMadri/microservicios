@@ -48,7 +48,6 @@ public class WebController {
 
 	@GetMapping("/multiplicar")
 	@ResponseBody
-<<<<<<< HEAD
 	public String multiplicar(@RequestParam double num1, @RequestParam double num2) {
 
 		double resultado = num1 * num2;
