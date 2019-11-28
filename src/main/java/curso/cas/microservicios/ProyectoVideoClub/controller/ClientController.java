@@ -19,11 +19,13 @@ public class ClientController {
 	private ClientRepository clientRepository;
 
 	@PostMapping(path = "/insertar")
-	public @ResponseBody String insertarCliente(@RequestParam String nombre, @RequestParam String email) {
+	public @ResponseBody String insertarCliente(@RequestParam(defaultValue = "David") String nombre, @RequestParam String email,
+			@RequestParam(required = false) String telephone) {
 
 		Cliente cliente = new Cliente();
 		cliente.setName(nombre);
 		cliente.setEmail(email);
+		cliente.setTelephone(telephone);
 
 		clientRepository.save(cliente);
 
