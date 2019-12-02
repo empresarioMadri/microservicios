@@ -12,6 +12,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,6 +65,7 @@ public class ClientController {
 		return responseEntity;
 	}
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@PostMapping(path = "/insertar/{nombre}/{telefono}")
 	public @ResponseBody String insertarCliente(@PathVariable String nombre, @RequestParam String email,
 			@PathVariable String telefono) throws ClientNotfoundException {
