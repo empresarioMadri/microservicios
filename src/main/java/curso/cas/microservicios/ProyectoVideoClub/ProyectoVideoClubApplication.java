@@ -77,6 +77,11 @@ public class ProyectoVideoClubApplication implements CommandLineRunner {
 		log.info("Nombre aplicacion " + props.getNombre());
 		log.info("Servidor aplicacion " + props.getServidor());
 		
+		log.warn("Prueba de warning");
+		log.error("Prueba de error");
+		log.debug("Prueba de debug");
+		log.trace("Prueba de trace");
+		
 	}
 
 	@Component
