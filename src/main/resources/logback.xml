@@ -14,7 +14,7 @@
 				%m%n</pattern>
 		</encoder>
 	</appender>
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
