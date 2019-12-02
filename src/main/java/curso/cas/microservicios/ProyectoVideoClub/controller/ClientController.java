@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import curso.cas.microservicios.ProyectoVideoClub.entities.Cliente;
+import curso.cas.microservicios.ProyectoVideoClub.errores.ClientNotfoundException;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.ClientRepository;
 
 @RestController
@@ -65,8 +66,11 @@ public class ClientController {
 
 	@PostMapping(path = "/insertar/{nombre}/{telefono}")
 	public @ResponseBody String insertarCliente(@PathVariable String nombre, @RequestParam String email,
-			@PathVariable String telefono) {
+			@PathVariable String telefono) throws ClientNotfoundException {
 
+		if(nombre.equals("David")) {
+			throw new ClientNotfoundException();
+		}
 		Cliente cliente = new Cliente();
 		cliente.setName(nombre);
 		cliente.setEmail(email);
