@@ -17,16 +17,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Cliente {
+public class Pelicula {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	private String name;
+	private String nombre;
 	
-	private String telephone;
+	private String director;
 	
-	private String email;
 
 }

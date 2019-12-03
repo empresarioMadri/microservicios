@@ -56,22 +56,22 @@ public class ProyectoVideoClubApplication extends WebMvcConfigurerAdapter implem
 		app.run(args);
 	}
 	
-	@Scheduled(cron="0 * 9 * * ?")
+	/*@Scheduled(cron="0 * 9 * * ?")
 	public void cronTarea() {
 		
 	}
 	
 	@Scheduled(fixedRate = 1000)
 	public void cronTarea1() throws InterruptedException {
-		TimeUnit.SECONDS.sleep(3);
 		log.info("Tarea se lanza cada segundo");
+		TimeUnit.SECONDS.sleep(3);
 	}
 	
 	@Scheduled(fixedDelay = 2000)
 	public void cronTarea2() throws InterruptedException {
-		TimeUnit.SECONDS.sleep(3);
 		log.info("Tarea se lanza cada 2 segundos esperando a que complete la anterior");
-	}
+		TimeUnit.SECONDS.sleep(3);
+	}*/
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
