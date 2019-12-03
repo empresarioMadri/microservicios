@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -112,6 +113,12 @@ public class ClientController {
 		List<Order> orden = new ArrayList<Order>();
 		orden.add(new Order(Direction.ASC, "name"));
 		return clientRepository.busquedaNombreAsc(nombre, Sort.by(orden));
+	}
+	
+	@DeleteMapping(path="/delete/{nombre}")
+	public @ResponseBody boolean deleteCliente(@PathVariable(required = true) String nombre) {
+		clientRepository.deleteByName(nombre);
+		return true;
 	}
 
 }
