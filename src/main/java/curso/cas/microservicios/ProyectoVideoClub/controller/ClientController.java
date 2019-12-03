@@ -70,7 +70,7 @@ public class ClientController {
 	public @ResponseBody String insertarCliente(@PathVariable String nombre, @RequestParam String email,
 			@PathVariable String telefono) throws ClientNotfoundException {
 
-		if(nombre.equals("David")) {
+		if (nombre.equals("David")) {
 			throw new ClientNotfoundException();
 		}
 		Cliente cliente = new Cliente();
@@ -87,6 +87,17 @@ public class ClientController {
 	@GetMapping(path = "/todos")
 	public @ResponseBody Iterable<Cliente> recogerTodosClientes() {
 		return clientRepository.findAll();
+	}
+
+	@GetMapping(path = "/{id}")
+	public @ResponseBody Cliente getCliente(@PathVariable(required = true) Integer id) {
+		return clientRepository.findById(id).get();
+	}
+
+	@GetMapping(path = "/{email}/{nombre}")
+	public @ResponseBody List<Cliente> getCliente(@PathVariable(required = true) String email,
+			@PathVariable(required = true) String nombre) {
+		return clientRepository.findByNameOrEmail(nombre,email);
 	}
 
 }

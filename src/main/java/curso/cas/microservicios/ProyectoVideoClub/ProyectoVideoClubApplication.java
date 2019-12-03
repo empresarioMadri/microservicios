@@ -3,6 +3,7 @@ package curso.cas.microservicios.ProyectoVideoClub;
 
 import java.io.PrintStream;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServlet;
 
@@ -19,6 +20,8 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -42,6 +45,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @Configuration
+@EnableScheduling
 public class ProyectoVideoClubApplication extends WebMvcConfigurerAdapter implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(ProyectoVideoClubApplication.class);
@@ -51,6 +55,23 @@ public class ProyectoVideoClubApplication extends WebMvcConfigurerAdapter implem
 		// app.setBannerMode(Banner.Mode.CONSOLE);
 		app.run(args);
 	}
+	
+	/*@Scheduled(cron="0 * 9 * * ?")
+	public void cronTarea() {
+		
+	}
+	
+	@Scheduled(fixedRate = 1000)
+	public void cronTarea1() throws InterruptedException {
+		log.info("Tarea se lanza cada segundo");
+		TimeUnit.SECONDS.sleep(3);
+	}
+	
+	@Scheduled(fixedDelay = 2000)
+	public void cronTarea2() throws InterruptedException {
+		log.info("Tarea se lanza cada 2 segundos esperando a que complete la anterior");
+		TimeUnit.SECONDS.sleep(3);
+	}*/
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
