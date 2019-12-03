@@ -32,8 +32,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import curso.cas.microservicios.ProyectoVideoClub.entities.Cliente;
+import curso.cas.microservicios.ProyectoVideoClub.entities.Direccion;
 import curso.cas.microservicios.ProyectoVideoClub.errores.ClientNotfoundException;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.ClientRepository;
+import curso.cas.microservicios.ProyectoVideoClub.repositories.DireccionRepository;
 
 @RestController
 @RequestMapping("/client")
@@ -41,6 +43,9 @@ public class ClientController {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private DireccionRepository direccionRepository;
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public String ficheroUpload(@RequestParam("file") MultipartFile file) throws IOException {
@@ -85,8 +90,17 @@ public class ClientController {
 		cliente.setName(nombre);
 		cliente.setEmail(email);
 		cliente.setTelephone(telefono);
-
+		
+		Direccion direccion = new Direccion();
+		direccion.setCalle("Calle Roma");
+		direccion.setCodigoPostal("43840");
+		direccion = direccionRepository.save(direccion);
+		
+		cliente.setDireccion(direccion);
+		
 		clientRepository.save(cliente);
+		
+		
 
 		return "Todo perfecto";
 
