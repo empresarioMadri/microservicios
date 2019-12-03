@@ -4,11 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.criteria.Expression;
+
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -97,7 +104,14 @@ public class ClientController {
 	@GetMapping(path = "/{email}/{nombre}")
 	public @ResponseBody List<Cliente> getCliente(@PathVariable(required = true) String email,
 			@PathVariable(required = true) String nombre) {
-		return clientRepository.findByNameOrEmail(nombre,email);
+		return clientRepository.findByNameOrEmail(nombre, email);
+	}
+
+	@GetMapping(path = "/{nombre}")
+	public @ResponseBody List<Cliente> getClienteByName(@PathVariable(required = true) String nombre) {
+		List<Order> orden = new ArrayList<Order>();
+		orden.add(new Order(Direction.ASC, "name"));
+		return clientRepository.busquedaNombreAsc(nombre, Sort.by(orden));
 	}
 
 }
