@@ -39,12 +39,6 @@ public class WebController {
 		log.info("Versión del programa2 " + appVersion2);
 	}
 
-	@GetMapping
-	@ResponseBody
-	public String index(@RequestParam String nombre) {
-		return "<h3>Hola mundo " + nombre + "</h3>";
-	}
-
 	@GetMapping("/multiplicar")
 	@ResponseBody
 	public Integer multiplicar(@RequestParam Integer operador1, @RequestParam Integer operador2) {

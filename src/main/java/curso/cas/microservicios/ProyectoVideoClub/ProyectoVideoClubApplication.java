@@ -2,6 +2,7 @@
 package curso.cas.microservicios.ProyectoVideoClub;
 
 import java.io.PrintStream;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServlet;
 
@@ -19,6 +20,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import curso.cas.microservicios.ProyectoVideoClub.controller.WebController;
 import curso.cas.microservicios.ProyectoVideoClub.servlet.HolaServlet;
@@ -34,7 +42,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @Configuration
-public class ProyectoVideoClubApplication implements CommandLineRunner {
+public class ProyectoVideoClubApplication extends WebMvcConfigurerAdapter implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(ProyectoVideoClubApplication.class);
 
@@ -42,6 +50,35 @@ public class ProyectoVideoClubApplication implements CommandLineRunner {
 		SpringApplication app = new SpringApplication(ProyectoVideoClubApplication.class);
 		// app.setBannerMode(Banner.Mode.CONSOLE);
 		app.run(args);
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/.*").allowedOrigins("http://localhost:9080");
+			}
+		};
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(localeChangeInterceptor());
+	}
+
+	@Bean
+	public LocaleResolver localeResolver() {
+		SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+		sessionLocaleResolver.setDefaultLocale(Locale.US);
+		return sessionLocaleResolver;
+	}
+
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName("language");
+		return localeChangeInterceptor;
 	}
 
 	@Bean
@@ -72,11 +109,16 @@ public class ProyectoVideoClubApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+
 		log.info("Descripcion aplicacion " + props.getDescripcion());
 		log.info("Nombre aplicacion " + props.getNombre());
 		log.info("Servidor aplicacion " + props.getServidor());
-		
+
+		log.warn("Prueba de warning");
+		log.error("Prueba de error");
+		log.debug("Prueba de debug");
+		log.trace("Prueba de trace");
+
 	}
 
 	@Component
