@@ -43,7 +43,7 @@ public class ClientController {
 
 	@Autowired
 	private ClientRepository clientRepository;
-	
+
 	@Autowired
 	private DireccionRepository direccionRepository;
 
@@ -90,17 +90,15 @@ public class ClientController {
 		cliente.setName(nombre);
 		cliente.setEmail(email);
 		cliente.setTelephone(telefono);
-		
+
 		Direccion direccion = new Direccion();
 		direccion.setCalle("Calle Roma");
 		direccion.setCodigoPostal("43840");
 		direccion = direccionRepository.save(direccion);
-		
+
 		cliente.setDireccion(direccion);
-		
+
 		clientRepository.save(cliente);
-		
-		
 
 		return "Todo perfecto";
 
@@ -116,6 +114,12 @@ public class ClientController {
 		return clientRepository.findById(id).get();
 	}
 
+	@GetMapping(path = "/cp/{codigoPostal}")
+	public @ResponseBody List<Cliente> getClienteByCodigoPostal(@PathVariable(required = true) String codigoPostal) {
+		List<Cliente> clientes = clientRepository.busquedaPorCodigoPostal(codigoPostal);
+		return clientes;
+	}
+
 	@GetMapping(path = "/{email}/{nombre}")
 	public @ResponseBody List<Cliente> getCliente(@PathVariable(required = true) String email,
 			@PathVariable(required = true) String nombre) {
@@ -128,8 +132,8 @@ public class ClientController {
 		orden.add(new Order(Direction.ASC, "name"));
 		return clientRepository.busquedaNombreAsc(nombre, Sort.by(orden));
 	}
-	
-	@DeleteMapping(path="/delete/{nombre}")
+
+	@DeleteMapping(path = "/delete/{nombre}")
 	public @ResponseBody boolean deleteCliente(@PathVariable(required = true) String nombre) {
 		clientRepository.deleteByName(nombre);
 		return true;
