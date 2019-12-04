@@ -5,7 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,11 +38,13 @@ import org.springframework.web.multipart.MultipartFile;
 import curso.cas.microservicios.ProyectoVideoClub.entities.Cliente;
 import curso.cas.microservicios.ProyectoVideoClub.entities.Direccion;
 import curso.cas.microservicios.ProyectoVideoClub.entities.Pelicula;
+import curso.cas.microservicios.ProyectoVideoClub.entities.PeliculaRegistro;
 import curso.cas.microservicios.ProyectoVideoClub.entities.PeliculaValoracion;
 import curso.cas.microservicios.ProyectoVideoClub.entities.PeliculaValoracionKey;
 import curso.cas.microservicios.ProyectoVideoClub.errores.ClientNotfoundException;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.ClientRepository;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.DireccionRepository;
+import curso.cas.microservicios.ProyectoVideoClub.repositories.PeliculaRegistroRepository;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.PeliculaRepository;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.PeliculaValoracionRepository;
 
@@ -57,11 +63,14 @@ public class ClientController {
 	
 	@Autowired
 	private PeliculaValoracionRepository peliculaValoracionRepository;
+	
+	@Autowired
+	private PeliculaRegistroRepository peliculaRegistroRepository;
 
 	@RequestMapping(value = "/insertarValoracion", method = RequestMethod.POST)
 	public String insertarValoracion(@RequestParam("idCliente") Integer idCliente,
 			@RequestParam("valoracion") int valoracion, @RequestParam("nombrePelicula") String nombrePelicula,
-			@RequestParam("directorPelicula") String directorPelicula) {
+			@RequestParam("directorPelicula") String directorPelicula,@RequestParam("fecha") Long fechaRegistro) {
 		
 		Pelicula pelicula = new Pelicula();
 		pelicula.setDirector(directorPelicula);
@@ -81,8 +90,17 @@ public class ClientController {
 		peliculaValoracion.setId(key);
 		peliculaValoracion = peliculaValoracionRepository.save(peliculaValoracion);
 		
-		
 		cliente.getValoraciones().add(peliculaValoracion);
+		
+		PeliculaRegistro peliculaRegistro = new PeliculaRegistro();
+		peliculaRegistro.setCliente(cliente);
+		Instant instant = Instant.ofEpochMilli(fechaRegistro);
+		LocalDateTime date = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+		peliculaRegistro.setFechaRegistro(date);
+		peliculaRegistro.setPelicula(pelicula);
+		peliculaRegistro = peliculaRegistroRepository.save(peliculaRegistro);
+		
+		cliente.getRegistros().add(peliculaRegistro);
 		
 		clientRepository.save(cliente);
 		

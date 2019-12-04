@@ -3,6 +3,8 @@ package curso.cas.microservicios.ProyectoVideoClub.entities;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,6 +24,7 @@ import lombok.ToString;
 public class PeliculaRegistro {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
 	
 	@ManyToOne
