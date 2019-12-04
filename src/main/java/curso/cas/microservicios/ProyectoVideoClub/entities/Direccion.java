@@ -23,21 +23,19 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Cliente {
+public class Direccion {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	private String name;
+	private String calle;
 	
-	private String telephone;
+	private String codigoPostal;
 	
-	private String email;
 	
-	@ManyToOne
-	@JoinColumn(name="direccion_id",nullable = false, updatable = false)
-	private Direccion direccion;
-
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "direccion")
+	private List<Cliente> clientes;
+	
 
 }

@@ -34,6 +34,8 @@ public interface ClientRepository extends CrudRepository<Cliente, Integer> {
 	Page<Cliente> queryFirst10ByName(String name, Pageable pageable);
 
 	List<Cliente> findFirst10ByEmail(String email);
+	
+	List<Cliente> findByDireccionCodigoPostal(String codigoPostal);
 
 	@Query("select c from Cliente c where c.email = ?1")
 	List<Cliente> findByEmail(String email);
@@ -49,6 +51,9 @@ public interface ClientRepository extends CrudRepository<Cliente, Integer> {
 
 	@Query("select c from Cliente c where c.name like :name%")
 	List<Cliente> busquedaNombreAsc2(@Param("name") String name, Sort sort);
+	
+	@Query("select c from Cliente c where c.direccion.codigoPostal = ?1")
+	List<Cliente> busquedaPorCodigoPostal(String codigoPostal);
 
 	@Query("delete from Cliente c where c.name = ?1")
 	@Modifying
