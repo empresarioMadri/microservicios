@@ -33,9 +33,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import curso.cas.microservicios.ProyectoVideoClub.entities.Cliente;
 import curso.cas.microservicios.ProyectoVideoClub.entities.Direccion;
+import curso.cas.microservicios.ProyectoVideoClub.entities.Pelicula;
+import curso.cas.microservicios.ProyectoVideoClub.entities.PeliculaValoracion;
+import curso.cas.microservicios.ProyectoVideoClub.entities.PeliculaValoracionKey;
 import curso.cas.microservicios.ProyectoVideoClub.errores.ClientNotfoundException;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.ClientRepository;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.DireccionRepository;
+import curso.cas.microservicios.ProyectoVideoClub.repositories.PeliculaRepository;
+import curso.cas.microservicios.ProyectoVideoClub.repositories.PeliculaValoracionRepository;
 
 @RestController
 @RequestMapping("/client")
@@ -46,6 +51,43 @@ public class ClientController {
 
 	@Autowired
 	private DireccionRepository direccionRepository;
+
+	@Autowired
+	private PeliculaRepository peliculaRepository;
+	
+	@Autowired
+	private PeliculaValoracionRepository peliculaValoracionRepository;
+
+	@RequestMapping(value = "/insertarValoracion", method = RequestMethod.POST)
+	public String insertarValoracion(@RequestParam("idCliente") Integer idCliente,
+			@RequestParam("valoracion") int valoracion, @RequestParam("nombrePelicula") String nombrePelicula,
+			@RequestParam("directorPelicula") String directorPelicula) {
+		
+		Pelicula pelicula = new Pelicula();
+		pelicula.setDirector(directorPelicula);
+		pelicula.setNombre(nombrePelicula);
+		pelicula = peliculaRepository.save(pelicula);
+
+		Cliente cliente = clientRepository.findById(idCliente).get();
+		//cliente.getPeliculas().add(pelicula);
+		
+		PeliculaValoracion peliculaValoracion = new PeliculaValoracion();
+		peliculaValoracion.setCliente(cliente);
+		peliculaValoracion.setPelicula(pelicula);
+		peliculaValoracion.setValoracion(valoracion);
+		PeliculaValoracionKey key = new PeliculaValoracionKey();
+		key.setCliente_id(cliente.getId());
+		key.setPelicula_id(pelicula.getId());
+		peliculaValoracion.setId(key);
+		peliculaValoracion = peliculaValoracionRepository.save(peliculaValoracion);
+		
+		
+		cliente.getValoraciones().add(peliculaValoracion);
+		
+		clientRepository.save(cliente);
+		
+		return "Todo está perfecto";
+	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public String ficheroUpload(@RequestParam("file") MultipartFile file) throws IOException {

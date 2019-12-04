@@ -37,5 +37,8 @@ public class Pelicula {
 	@OneToMany(mappedBy = "pelicula")
 	List<PeliculaValoracion> valoraciones;
 	
+	@OneToMany(mappedBy = "pelicula")
+	List<PeliculaRegistro> registros;
+	
 
 }

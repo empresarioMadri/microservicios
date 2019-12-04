@@ -48,5 +48,8 @@ public class Cliente {
 
 	@OneToMany(mappedBy = "cliente")
 	List<PeliculaValoracion> valoraciones;
+	
+	@OneToMany(mappedBy = "cliente")
+	List<PeliculaRegistro> registros;
 
 }
