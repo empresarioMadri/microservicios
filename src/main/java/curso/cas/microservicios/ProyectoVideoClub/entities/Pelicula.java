@@ -1,9 +1,13 @@
 package curso.cas.microservicios.ProyectoVideoClub.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,6 +30,12 @@ public class Pelicula {
 	private String nombre;
 	
 	private String director;
+	
+	@ManyToMany(mappedBy = "peliculas")
+	private List<Cliente> clientes;
+	
+	@OneToMany(mappedBy = "pelicula")
+	List<PeliculaValoracion> valoraciones;
 	
 
 }
