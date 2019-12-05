@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import curso.cas.microservicios.ProyectoVideoClub.beans.ClienteResponse;
 import curso.cas.microservicios.ProyectoVideoClub.entities.Cliente;
 import curso.cas.microservicios.ProyectoVideoClub.entities.Direccion;
 import curso.cas.microservicios.ProyectoVideoClub.entities.Pelicula;
@@ -34,6 +35,7 @@ import curso.cas.microservicios.ProyectoVideoClub.errores.ClientNotfoundExceptio
 import curso.cas.microservicios.ProyectoVideoClub.repositories.ClientRepository;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.DireccionRepository;
 import curso.cas.microservicios.ProyectoVideoClub.repositories.PeliculaRepository;
+import curso.cas.microservicios.ProyectoVideoClub.services.ClientService;
 
 @RestController
 @RequestMapping("/client")
@@ -41,6 +43,9 @@ public class ClientController {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private ClientService clientService;
 
 	@Autowired
 	private DireccionRepository direccionRepository;
@@ -143,9 +148,9 @@ public class ClientController {
 	}
 
 	@GetMapping(path = "/{email}/{nombre}")
-	public @ResponseBody List<Cliente> getCliente(@PathVariable(required = true) String email,
+	public @ResponseBody List<ClienteResponse> getCliente(@PathVariable(required = true) String email,
 			@PathVariable(required = true) String nombre) {
-		return clientRepository.findByNameOrEmail(nombre, email);
+		return clientService.findByNameOrEmail(nombre, email);
 	}
 
 	@GetMapping(path = "/{nombre}")
