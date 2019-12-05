@@ -34,11 +34,4 @@ public class Pelicula {
 	@ManyToMany(mappedBy = "peliculas")
 	private List<Cliente> clientes;
 	
-	@OneToMany(mappedBy = "pelicula")
-	List<PeliculaValoracion> valoraciones;
-	
-	@OneToMany(mappedBy = "pelicula")
-	List<PeliculaRegistro> registros;
-	
-
 }

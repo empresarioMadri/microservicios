@@ -46,10 +46,5 @@ public class Cliente {
 	@JoinColumn(name = "direccion_id", nullable = false, updatable = false)
 	private Direccion direccion;
 
-	@OneToMany(mappedBy = "cliente")
-	List<PeliculaValoracion> valoraciones;
-	
-	@OneToMany(mappedBy = "cliente")
-	List<PeliculaRegistro> registros;
 
 }

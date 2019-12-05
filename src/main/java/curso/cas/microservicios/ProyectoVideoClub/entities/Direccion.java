@@ -34,7 +34,7 @@ public class Direccion {
 	private String codigoPostal;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "direccion")
+	@OneToMany(mappedBy = "direccion")
 	private List<Cliente> clientes;
 	
 
